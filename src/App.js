@@ -7,18 +7,15 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./style.css";
 import Navbar from './components/Navbar';
 //import Register from './components/Register';
-//about the second login
 import  Form from './component/Form';
 import Home from './components/Home';
 import Read from './component/read';
+import CreateOne from './component/create';
 import  Data from './components/okay';
 //about_the_crud
-import Create from './components/create.component';
 import Edit from './components/edit.component';
-import Index from './components/index.component';
 
 if(localStorage.jwtToken) {
-  //setAuthToken(localStorage.jwtToken);
   const decoded = localStorage.jwtToken;
   const dateinit= localStorage.getItem('dateCreate');
   store.dispatch(setCurrentUser(decoded));
@@ -37,15 +34,13 @@ class App extends Component {
         <Router>
             <div>
               <Navbar />
-
                 <Route exact path="/" component={ Home } />
                 <div className="container">
                 <Switch>
-                    <Route exact path='/create' component={ Create } />
                     <Route path='/edit/:id' component={ Edit } />
                     <Route exact path="/login" component={ Form } />
                     <Route exact path="/read" component={Read} />
-                    <Route path='/index' component={ Index } />
+                    <Route exact path="/createone" component={CreateOne} />
                     <Route exact path='/data' component={ Data } />
               </Switch>
                 </div>

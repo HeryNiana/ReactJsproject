@@ -22,7 +22,13 @@ class Edit extends Component {
   }
 
   componentDidMount() {
-      axios.get('http://localhost:8000/api/clients/'+this.props.match.params.id)
+          let token=localStorage.getItem('jwtToken');
+          let config={
+          headers:{
+            'Authorization':token
+          }
+        };
+            axios.get('http://localhost:8000/api/clients/'+this.props.match.params.id,config)
           .then(response => {
               this.setState({ 
                 person_name: response.data.person_name, 

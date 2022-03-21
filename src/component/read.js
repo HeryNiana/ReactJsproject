@@ -4,34 +4,34 @@ import { Alert } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 import DeleteConfirmation from "./confirmTwo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { connect } from 'react-redux';
-import  Login from '../component/Form';
-import { logoutUser } from '../actions/authentication';
-import PropTypes from 'prop-types';
+import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 export default function Read() {
     const [APIData, setAPIData] = useState([]);
     useEffect(() => {
-        axios.get('http://localhost:8000/api/clients')
+        //e.preventDefault();
+        let token=localStorage.getItem('jwtToken');
+        let config={
+        headers:{
+          'Authorization':token
+        }
+      };
+        axios.get('http://localhost:8000/api/clients',config)
             .then((response) => {
                 console.log(response.data)
-                setAPIData(response.data);
-            })
+                setAPIData(response.data);           
+         })
     }, []);
-//envoye les données dans la localStorage
-    const setData = (data) => {
-        let { id, person_name, business_name, business_gst_number } = data;
-        localStorage.setItem('id', id);
-        localStorage.setItem('person_name', person_name);
-        localStorage.setItem('business_name', business_name);
-        localStorage.setItem('business_gst_number', business_gst_number)
-    }
-
     const getData = () => {
-        axios.get('http://localhost:8000/api/clients')
+        let token=localStorage.getItem('jwtToken');
+        let config={
+        headers:{
+          'Authorization':token
+        }
+      };
+      axios.get('http://localhost:8000/api/clients',config)
             .then((getData) => {
                 setAPIData(getData.data);
-            })
+            });
     }
 
     const [id, setId] = useState(null);
@@ -49,27 +49,28 @@ export default function Read() {
   };
   // Handle the actual deletion of the item
   const submitDelete = (id) => {
-    axios.delete(`http://localhost:8000/api/clients/${id}`)
+    let config={
+      headers:{
+        'Authorization':localStorage.getItem('jwtToken')
+      }
+    };
+    axios.delete(`http://localhost:8000/api/clients/${id}`, config)
     .then(() => {
         getData();
     })
-      setFruitMessage(`The client was deleted successfully.`);
+      setFruitMessage(`Le clients selectioné était supprimé avec succes.`);
       //setFruits(fruits.filter((fruit) => fruit.id !== id));
     setDisplayConfirmationModal(false);
   };
 
-    //const onDelete = (id) => {
-    //    axios.delete(`http://localhost:8000/api/clients/${id}`)
-    //    .then(() => {
-    //        getData();
-    //    })
-    //}
-
-    return (
+    if(localStorage.getItem('jwtToken') === null){
+      window.location.href = '/login'       
+    } else {
+      return (
         <div>
            <h3 className="titre" align="center">Business List</h3>
            {fruitMessage && <Alert variant="success">{fruitMessage}</Alert>}
-        <table className="table datatable table-striped" style={{ textAlign:'center' }}>
+        <table className="table datatable table-striped">
           <thead>
             <tr>
                 <th>Person Name</th>
@@ -85,9 +86,13 @@ export default function Read() {
                         <td>{data.person_name}</td>
                         <td>{data.business_name}</td>
                         <td>{data.business_gst_number}</td>
-                        <td><Link to={"/edit/"+data.id} className="btn btn-primary">Editer</Link></td>
+                        <td><Link to={"/edit/"+data.id} className="btn btn-primary">
+                          <FontAwesomeIcon icon={faEdit} />
+                          </Link></td>
                         <td className='text-center'>
-                          <FontAwesomeIcon icon={faTrash} className="text-danger cursor" onClick={() => showDeleteModal(data.id)} />
+                          <p className="deleteData" ><FontAwesomeIcon icon={faTrash} className="text-danger" 
+                          onClick={() => showDeleteModal(data.id)} />
+                          </p>
                         </td>
                     </tr>
                 )
@@ -98,15 +103,6 @@ export default function Read() {
             confirmModal={submitDelete} hideModal={hideConfirmationModal} id={id} message={deleteMessage}  />
         </div>
     )
+    }
+   
 }
-
-/*Read.propTypes = {
-  logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
-}
-
-const mapStateToProps = (state) => ({
-  auth: state.auth
-})
-to_connect_a_react_component_to_a_redux_store
-export default connect(mapStateToProps, { logoutUser })(withRouter(Read));*/

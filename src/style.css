@@ -14,3 +14,21 @@
     padding: 0;
     border-radius: 2px 2px white;
 }
+.loginSize{
+    margin-top: 50px;
+    border-radius: 8px;
+}
+.deleteData{
+    cursor: pointer;
+}
+.table{
+    text-align: center;
+    width: 50%;
+}
+.demoForm {
+	width: 500px;
+	margin: auto;
+}
+.error{
+	color: red;
+}

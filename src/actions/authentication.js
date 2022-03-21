@@ -13,7 +13,7 @@ export const loginUser = (user) => dispatch => {
                 }
                 else if(response.data.status == 201)
                 {
-                  alert('Veuillez reessayer avec des infàormations correctes !!!')
+                  alert('Veuillez réessayer avec des informations correctes !')
                 }
             }).catch(err => {
                 dispatch({
@@ -35,5 +35,5 @@ export const logoutUser = (history) => dispatch => {
     localStorage.removeItem('dateCreate');
 
     dispatch(setCurrentUser({}));
-    history.push('/login');
+    window.location.href = '/login';
 }

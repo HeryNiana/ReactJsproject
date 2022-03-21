@@ -20,10 +20,10 @@ class Navbar extends Component {
         <div className="nav_menu">
             <ul className="navbar-nav ml-auto">
                  <a>
-               	     <Link className="navbar-brand"  to={'/index'} className="nav-link"><strong>Produits</strong> </Link>
+               	     <Link className="navbar-brand"  to={'/data'} className="nav-link"><strong>Produits</strong> </Link>
                	 </a>
                  <a>
-                      <Link className="navbar-brand"  to={'/create'} className="nav-link"><strong>Nouveau</strong> </Link>
+                      <Link className="navbar-brand"  to={'/createOne'} className="nav-link"><strong>Nouveau</strong> </Link>
                  </a>
                   <a>
                       <Link className="navbar-brand"  to={'/read'} className="nav-link"><strong>Autre index</strong> </Link>

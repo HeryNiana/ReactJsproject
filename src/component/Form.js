@@ -4,7 +4,6 @@ import { FormErrors2 } from './FormErrors';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginUser } from '../actions/authentication';
-import './Form.css';
 class Form extends Component {
   constructor (props) {
     super(props);
@@ -96,7 +95,7 @@ class Form extends Component {
 
   render () {
     return (
-        <div className="row">
+        <div className="row loginSize">
                     <div className="clearfix"></div>
           <div className="col-sm-4 col-md-4 col-lg-4"></div>
           <div className="col-sm-4 col-md-4 col-lg-4 contenu">
